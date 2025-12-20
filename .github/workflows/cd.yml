@@ -36,7 +36,7 @@ jobs:
           containerAppName:  ${{ vars.CONTAINER_APP_NAME }}
           appSourcePath:     ${{ github.workspace }}
           dockerfilePath:    ./Dockerfile
-          registry-url:      ${{ vars.REGISTRY }}
-          registry-username: ${{ secrets.DOCKERHUB_USERNAME }}
-          registry-password: ${{ secrets.DOCKERHUB_TOKEN }}
+          registryUrl:      ${{ vars.REGISTRY }}
+          registryUsername: ${{ secrets.DOCKERHUB_USERNAME }}
+          registryPassword: ${{ secrets.DOCKERHUB_TOKEN }}
           imageToBuild: ${{ vars.IMAGE_REPO }}:${{ github.sha }}
