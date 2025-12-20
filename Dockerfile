@@ -1,21 +1,25 @@
-FROM node:15 as builder
+FROM node:15 AS builder
 
-WORKDIR
+WORKDIR /app
 
-COPY
+COPY . ./ 
 
-RUN 
+RUN npm install
 
-COPY
+RUN npm run build
 
-RUN 
+FROM node:15-alpine AS production
 
-FROM
+WORKDIR /app
 
-WORKDIR
+COPY package*.json ./
 
-COPY
+RUN npm install --omit=dev
 
-RUN 
+COPY --from=builder /app/build ./build
 
-ENTRYPOINT 
+RUN npm install -g serve
+
+EXPOSE 8080
+
+CMD ["serve", "-s", "build", "-l", "8080"]
