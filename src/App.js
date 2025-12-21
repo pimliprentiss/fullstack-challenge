@@ -10,7 +10,7 @@ function App() {
       <IPv4Addr />
       <footer>
         <hr />
-        If you find this tool useful, you might enjoy reading my blog:{" "}
+        If you find this tool useful, you might enjoy reading my blog:{"There is no way I am not getting this job "}
         <a href="https://rderik.com">rderik.com</a>
       </footer>
     </div>
