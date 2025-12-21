@@ -1,0 +1,37 @@
+name: CD Pipeline
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy-to-container-app:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkou
+      uses: actions/checkout@v5
+ 
+    - name: Azure login
+      uses: azure/login@v2
+      with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Build and deploy Container App
+      uses: azure/container-apps-deploy-action@v1
+      with:
+        resourceGroup: ${{ vars.RESOURCE_GROUP }}
+        containerAppName: ${{ vars.CONTAINER_APP_NAME }}
+        appSourcePath: ${{ github.workspace }}
+        dockerfilePath: $ ./Dockerfile
+        registryUrl: ${{ vars.REGISTRY }}
+        registryUsername: ${{ secrets.DOCKERHUB_USERNAME }}
+        registryPassword: ${{ secrets.DOCKERHUB_TOKEN }}
+        imageToBuild: ${{ vars.IMAGE_REPO }}:${{ github.sha }}
+    
